@@ -1,7 +1,7 @@
 package com.example.calculator
 
-import android.hardware.lights.Light
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,16 +36,19 @@ fun Calculator(
                 .align(Alignment.BottomCenter),
             verticalArrangement = Arrangement.spacedBy(buttonSpacing)
         ) {
-            Text(
-                text = state.pastCalculation,
-                textAlign = TextAlign.End,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                fontWeight = FontWeight.Light,
-                fontSize = 25.sp,
-                color = Color.Gray,
-                maxLines = 1
-            )
+            Box(modifier = Modifier.clickable { onAction(CalculatorAction.LastCalc) }) {
+                Text(
+                    text = state.pastCalculation,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    fontWeight = FontWeight.Light,
+                    fontSize = 25.sp,
+                    color = Color.Gray,
+                    maxLines = 1
+                )
+            }
+
             Text(
                 text = state.number1 + (state.operation?.symbol ?: "") + state.number2,
                 textAlign = TextAlign.End,

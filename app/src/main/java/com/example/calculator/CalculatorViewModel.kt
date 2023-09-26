@@ -18,6 +18,7 @@ class CalculatorViewModel: ViewModel() {
             is CalculatorAction.Operation -> enterOperation(action.operation)
             is CalculatorAction.Calculate -> performCalculation()
             is CalculatorAction.Delete -> performDelete()
+            is CalculatorAction.LastCalc -> enterLastCalculations()
         }
     }
 
@@ -91,6 +92,25 @@ class CalculatorViewModel: ViewModel() {
                 number2 = state.number2 + "."
             )
         }
+    }
+
+    private fun enterLastCalculations() {
+        val lastCalc = state.pastCalculation.split(" ")
+        val lastOperation = when(lastCalc[1]) {
+            "+" -> CalculatorOperations.Add
+            "-" -> CalculatorOperations.Subtract
+            "*" -> CalculatorOperations.Multiply
+            "/" -> CalculatorOperations.Divide
+            else -> return
+        }
+
+
+        state = state.copy(
+            number1 = lastCalc[0],
+            number2 = lastCalc[2],
+            operation = lastOperation,
+            pastCalculation = "",
+        )
     }
 
     private fun enterNumber(number: Int) {
